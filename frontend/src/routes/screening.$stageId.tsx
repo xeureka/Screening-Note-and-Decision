@@ -12,11 +12,11 @@ function ScreeningPage() {
   const { stageId } = Route.useParams();
   const queryClient = useQueryClient();
 
-  // 1. Local Form State
+  //  Form State
   const [note, setNote] = useState("");
   const [decision, setDecision] = useState("");
 
-  // 2. Query to fetch data
+  // Queryy to fetch data
   const {
     data: rawData,
     isLoading,
@@ -26,10 +26,8 @@ function ScreeningPage() {
     queryFn: () => fetchScreening(stageId),
   });
 
-  // Normalize data (handles { data: { ... } } or { ... })
   const data = rawData?.data ?? rawData;
 
-  // 3. SYNC FIX: Load existing data into the form when it arrives
   useEffect(() => {
     if (data) {
       setNote(data.note || "");
@@ -37,7 +35,7 @@ function ScreeningPage() {
     }
   }, [data]);
 
-  // 4. Save Mutation
+  //  Save Mutation
   const mutation = useMutation({
     mutationFn: (payload: { note: string; decision: string }) =>
       saveScreening(stageId, payload),
