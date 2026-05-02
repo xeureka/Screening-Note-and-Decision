@@ -49,3 +49,76 @@ The backend is a lightweight, high-performance API.
 
 
 ```
+## 🛠️ Setup & Installation
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+```
+
+### 2. Configure Environment
+
+Create a `.env` file in the backend folder:
+
+```bash
+# backend/.env
+DATABASE_URL=postgres://username:password@localhost:5432/hiring_db
+PORT=3000
+CORS_ORIGIN=http://localhost:5173
+```
+
+### 3. Run the Backend
+
+The backend uses [Bun](https://bun.sh/) for maximum performance.
+
+```bash
+cd backend
+bun install
+bun run dev
+```
+
+### 4. Run the Frontend
+
+The frontend uses [pnpm](https://pnpm.io/) for efficient package management.
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+---
+
+## 🧪 Mock Testing & Workflow
+
+The system uses a dynamic routing pattern. You can test different candidate screenings by simply changing the ID in the URL.
+
+| Feature        | Action            | Endpoint / URL                                                      |
+| -------------- | ---------------- | ------------------------------------------------------------------- |
+| New Screening  | Open Browser     | `http://localhost:5173/screening/stage-abc-123`                     |
+| Get Decision   | Auto-fetch on load | `GET /hiring/application/screening/:id/decision`                   |
+| Save Decision  | Click "Save" Button | `POST /hiring/application/screening/:id/decision`                |
+| Check Health   | API Status        | `http://localhost:3000/health`                                      |
+
+---
+
+### How it works:
+
+- **Navigation:** When you visit a link like `/screening/stage-101`, the frontend extracts `stage-101`.
+- **Initial Load:** The UI fetches any existing data for that ID from the database.
+- **Interaction:** You select a decision (Pass/Fail) and write a note.
+- **Submission:** Clicking "Save" sends a POST request with an `x-user-role: recruiter` header.
+- **Revalidation:** Upon a successful save, the UI automatically refreshes the "Latest Saved Data" card using TanStack Query invalidation.
+
+---
+
+## 🛡️ Linting & Formatting
+
+Both projects use [Biome](https://biomejs.dev/) for lightning-fast linting and formatting.
+
+```bash
+# From either directory
+bun x biome check --write .
+```
