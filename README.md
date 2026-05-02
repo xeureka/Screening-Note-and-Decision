@@ -54,8 +54,8 @@ The backend is a lightweight, high-performance API.
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+git clone git@github.com:xeureka/Screening-Note-and-Decision.git
+cd Screening-Note-and-Decision
 ```
 
 ### 2. Configure Environment
