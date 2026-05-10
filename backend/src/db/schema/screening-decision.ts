@@ -1,12 +1,23 @@
-import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
+
+const decisionEnum = pgEnum("decision", ["pass", "hold", "reject"]);
 
 export const screeningDecisions = pgTable("screening_decisions", {
-    id: uuid("id").defaultRandom().primaryKey(),
-    stageId: varchar("stage_id", { length: 255 }).notNull().unique(),
-    decision: varchar("decision", { length: 20 }).notNull(), // pass | hold | reject
-    note: text("note"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  id: uuid("id").defaultRandom().primaryKey(),
+  stageId: varchar("stage_id", { length: 255 }).notNull().unique(),
+  //    decision: varchar("decision", { length: 20 }).notNull(), // pass | hold | reject
+  decision: decisionEnum("decision").notNull(),
+
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type ScreeningDecision = typeof screeningDecisions.$inferSelect;
